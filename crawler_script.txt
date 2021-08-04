@@ -1,0 +1,43 @@
+//Setting
+url,https://officemail.cloudmax.com.tw
+img_path,/Users/paking-guest/Desktop/pythonTool/crawler/screen.png
+outputText,/Users/paking-guest/Desktop/pythonTool/crawler/outputText.txt
+driverPath,/Users/paking-guest/Desktop/pythonTool/crawler/chromedriver
+offsetX,925
+offsetY,480
+marginRight,120
+marginBottom,70
+browserW,1440
+browserH,900
+//Setting
+
+
+//Script
+input,NAME,USERID,test@123.com
+input,NAME,PASSWD,123456
+recognize,ID,CaptQuiz
+input_recognize,NAME,CaptAns
+text,TAG_NAME,strong
+//Script
+
+/////////////////HOW TO USE///////////////////
+#offset, marginRight 抓取影像校正
+
+// 1.Action
+input #輸入文字
+click #點擊
+text #取得文字
+recognize #辨識圖片文字
+
+// 2.Html Tag or attri
+ID = "id" # filter by ID
+NAME = "name" # filter by NAME
+TAG_NAME = "tag name" # filter by tag name
+CLASS_NAME = "class name" # filter by class name
+CSS_SELECTOR = "css selector"  # filter by css
+
+// 3. tag or attr val
+# tag or attr 是什麼
+
+// 4. input val or null
+# action 是 input 才有值
