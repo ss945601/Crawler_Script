@@ -17,7 +17,7 @@ input,NAME,USERID,test@123.com
 input,NAME,PASSWD,123456
 recognize,ID,CaptQuiz
 input_recognize,NAME,CaptAns
-text,TAG_NAME,strong
+text,TAG_NAME,div
 //Script
 
 /////////////////HOW TO USE///////////////////
