@@ -16,8 +16,8 @@ import easyocr
 import re
 from pprint import pprint
 # config absolute
-
-path = '/Users/paking-guest/Desktop/pythonTool/crawler/crawler_script.txt'
+folderPath = '/Users/paking-guest/Desktop/pythonTool'
+path = folderPath + '/Crawler_Script/crawler_script.txt'
 
 # config
 def find_between( s, first, last ):

@@ -1,8 +1,8 @@
 //Setting
 url,https://officemail.cloudmax.com.tw
-img_path,/Users/paking-guest/Desktop/pythonTool/crawler/screen.png
-outputText,/Users/paking-guest/Desktop/pythonTool/crawler/outputText.txt
-driverPath,/Users/paking-guest/Desktop/pythonTool/crawler/chromedriver
+img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/screen.png
+outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
+driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
 offsetX,925
 offsetY,480
 marginRight,120
