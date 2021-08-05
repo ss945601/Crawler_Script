@@ -8,19 +8,19 @@ img_path (辨識圖片內文字,影像存取位置)
 outputText (抓取文字輸出紀錄）
 driverPath (Chrome driver位置, 要用其他browser自行修改)
 offsetX,offsetY (頻幕抓取圖片座標調整)
-marginRight,marginBottom （頻幕抓取圖片向右或向下拓寬）
+scale_x,scale_y （頻幕抓取圖片延伸倍率）
 browserW,browserH（瀏覽器window size）
 ocrMode(文字辨識技術 0:pytesseract 1:easyocr(推薦))
 #--------
 //Setting
 url,https://officemail.cloudmax.com.tw/
-img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/screen.png
+img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/
 outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
 driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
 offsetX,925
 offsetY,480
-marginRight,120
-marginBottom,70
+scale_x,2
+scale_y,2
 browserW,1440
 browserH,900
 ocrMode,1
@@ -32,7 +32,7 @@ ocrMode,1
 ex : text,TAG_NAME,td // 爬所有<td>內的文字
 #--------
 //Script
-text,TAG_NAME,td
+recognize,XPATH,//img[@alt='OfficeMail 企業郵件代管']
 //Script
 
 /////////////////HOW TO USE///////////////////

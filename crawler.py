@@ -69,11 +69,13 @@ def doAction(item):
         if ( act == 'text' ):
             outputString += "<get>" + item.text + "<get>\n"
         if ( act == 'recognize' ):
-            get_captcha(driver,item,img_path)
-        if ( act == 'input_recognize'):
-            if len(detectString) > 0 :
-                item.send_keys(detectString[0])
-                detectString.pop(0)
+            get_captcha(driver,item,img_path+"recognize.png")
+            if ( act == 'input_recognize'):
+                if len(detectString) > 0 :
+                    item.send_keys(detectString[0])
+                    detectString.pop(0)
+        if (act == 'get_image'):
+            getImage(item,img_path+source[2]+'.png')
     if ( act == 'js'):
         driver.execute_script(source[1])
         
@@ -82,21 +84,27 @@ def doSrcipt(driver,action):
         doAction(item)
     print( "Script Done!" )
 
+def getImage(element,path):
+    global driver
+    driver.save_screenshot(path)          # 先將目前的 screen 存起來
+    location = element.location           # 取得圖片 element 的位置
+    size = element.size                   # 取得圖片 element 的大小
+    print(size)
+    left = int(location['x']) + offsetX                 # 決定上下左右邊界
+    top = int(location['y']) + offsetY
+    right = left + int(size['width']) * scale_x
+    bottom = top + int(size['height']) * scale_y
+    image = Image.open(path)        # 將 screen load 至 memory
+    image = image.crop((left, top, right, bottom)) # 根據位置剪裁圖片
+    image.save(path, 'png')
+    return image
+
 def get_captcha(driver, element, path):
     global reader
     global detectString
     global outputString
     global ocrMode
-    driver.save_screenshot(path)          # 先將目前的 screen 存起來
-    location = element.location           # 取得圖片 element 的位置
-    size = element.size                   # 取得圖片 element 的大小
-    left = int(location['x']) + offsetX                 # 決定上下左右邊界
-    top = int(location['y']) + offsetY
-    right = left + int(size['width']) + marginRight
-    bottom = top + int(size['height']) + marginBottom
-    image = Image.open(path)        # 將 screen load 至 memory
-    image = image.crop((left, top, right, bottom)) # 根據位置剪裁圖片
-    image.save(path, 'png')
+    image = getImage(element,path)
     if ocrMode == 0:
         print('pytesseract')
         detectString = pytesseract.image_to_string(image)
@@ -124,8 +132,8 @@ img_path = settingDict['img_path']
 driverPath = settingDict['driverPath']
 offsetX = int(settingDict['offsetX'])
 offsetY = int(settingDict['offsetY'])
-marginRight = int(settingDict['marginRight'])
-marginBottom = int(settingDict['marginBottom'])
+scale_x = float(settingDict['scale_x'])
+scale_y = float(settingDict['scale_y'])
 outputString = ""
 print('===Setting===')
 pprint(settingDict)
