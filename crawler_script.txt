@@ -13,7 +13,7 @@ browserW,browserH（瀏覽器window size）
 ocrMode(文字辨識技術 0:pytesseract 1:easyocr(推薦))
 #--------
 //Setting
-url,https://officemail.cloudmax.com.tw/
+url,http://000001rd.pakingtek.com/Local/map/3F.svg
 img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/
 outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
 driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
@@ -28,11 +28,12 @@ ocrMode,1
 
 
 #--------
-#將腳本動作寫入Script內 格式：action,Tag / Attr,Value of Tag / Attr,....
-ex : text,TAG_NAME,td // 爬所有<td>內的文字
+#將腳本動作寫入Script內 格式：action|Tag / Attr|Value of Tag / Attr|....
+ex : text|TAG_NAME|td // 爬所有<td>內的文字
 #--------
 //Script
-recognize,XPATH,//img[@alt='OfficeMail 企業郵件代管']
+set_attr_val|XPATH|//*[contains(@id, 'p_0')]|stroke-width|10
+export|output.svg
 //Script
 
 /////////////////HOW TO USE///////////////////
@@ -43,9 +44,11 @@ recognize,XPATH,//img[@alt='OfficeMail 企業郵件代管']
 input #輸入文字
 click #點擊
 text #取得文字
+get_attr_val #取得attribute value （ EX: get_attr_val,ID,p_0264_03,stroke-width,x,y 取得ID p_0264_03 的stroke-width,x,y 屬性值 ）
+set_attr_val #設定attribute value （ EX: set_attr_val,ID,p_0264_03,stroke-width,10 將ID p_0264_03 的 stroke-width 屬性 設成 10 ）
 recognize #辨識圖片文字
 js # do js script
-
+export # 輸出網頁內容 (EX : export|output.html)
 
 // 2.Html Tag or attri
 1.ID = "id" # filter by ID
@@ -62,8 +65,8 @@ js # do js script
     # <ul class="dropdown-menu">
     #   <li><a href="/login/form">Login</a></li>
     #   <li><a href="/logout">Logout</a></li>
-    # </ul>
-    element = driver.find_element(:xpath, '//a[@href='/logout']')
+    # </ul> 
+    element = driver.find_element(:xpath, '//a[@href='/logout']') //*[contains(@name,'btn')]
 7.LINK_TEXT = "link text"
 8.PARTIAL_LINK_TEXT = "partial link text"
 
@@ -72,4 +75,4 @@ js # do js script
 # tag or attr 是什麼
 
 // 4. input val or null
-# action 是 input 才有值
+# action 是 input or get_attr_val 才有值

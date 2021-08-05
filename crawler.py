@@ -37,10 +37,16 @@ def doAction(item):
     # TAG_NAME = "tag name"
     # CLASS_NAME = "class name"
     # CSS_SELECTOR = "css selector"
+    global driver
     global detectString
     global outputString
-    source = item.split(",")
+    outputString += item + "\n"
+    source = item.split("|")
     act = source[0]
+    if act == 'export':
+        f = open(folderPath + '/Crawler_Script/' + source[1], "a")
+        f.write(driver.page_source)
+        f.close()
     tag = By.ID
     if source[1] == "ID":
        tag = By.ID 
@@ -76,6 +82,13 @@ def doAction(item):
                     detectString.pop(0)
         if (act == 'get_image'):
             getImage(item,img_path+source[2]+'.png')
+        if (act == 'get_attr_val'):
+            search = source[3:]
+            for el in search:
+                outputString += "<{}>".format(el) + item.get_attribute(el) + "<{}>\n".format(el)
+        if (act == 'set_attr_val'):
+            search = source[3:]
+            driver.execute_script("arguments[0].setAttribute(arguments[1], arguments[2])", item, search[0],search[1] )
     if ( act == 'js'):
         driver.execute_script(source[1])
         
