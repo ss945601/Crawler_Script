@@ -13,7 +13,7 @@ browserW,browserH（瀏覽器window size）
 ocrMode(文字辨識技術 0:pytesseract 1:easyocr(推薦))
 #--------
 //Setting
-url,https://www.cnblogs.com/PSSSCode/p/5465684.html
+url,https://officemail.cloudmax.com.tw/
 img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/screen.png
 outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
 driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
