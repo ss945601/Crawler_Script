@@ -44,38 +44,49 @@ def doAction(item):
     tag = By.ID
     if source[1] == "ID":
        tag = By.ID 
+    if source[1] == "LINK_TEXT":
+       tag = By.LINK_TEXT 
+    if source[1] == "PARTIAL_LINK_TEXT":
+       tag = By.PARTIAL_LINK_TEXT
+    if source[1] == "XPATH":
+       tag = By.XPATH
     if source[1] == "NAME":
        tag = By.NAME 
     if source[1] == "CSS_SELECTOR":
        tag = By.CSS_SELECTOR 
     if source[1] == "CLASS_NAME":
-       tag = By.CLASS_NAME 
+       tag = By.CLASS_NAME
     if source[1] == "TAG_NAME":
        tag = By.TAG_NAME 
-    tagVal = source[2]
+    tagVal = source[2] if len(source) > 2 else ""
     setVal = source[3] if len(source) > 3 else ""
-    if ( act == 'input' ):
-        driver.find_element(tag, tagVal).send_keys(setVal)
-    if ( act == 'click' ):
-        driver.find_element(tag, tagVal).click()
-    if ( act == 'text' ):
-        outputString += "<get>" + driver.find_element(tag, tagVal).text + "<get>\n"
-    if ( act == 'recognize' ):
-        get_captcha(driver,driver.find_element(tag, tagVal),img_path)
-    if ( act == 'input_recognize'):
-        if len(detectString) > 0 :
-            driver.find_element(tag, tagVal).send_keys(detectString[0])
-            detectString.pop(0)
+    tmp = driver.find_elements(tag, tagVal)
+    for item in tmp:
+        if ( act == 'input' ):
+            item.send_keys(setVal)
+        if ( act == 'click' ):
+            item.click()
+        if ( act == 'text' ):
+            outputString += "<get>" + item.text + "<get>\n"
+        if ( act == 'recognize' ):
+            get_captcha(driver,item,img_path)
+        if ( act == 'input_recognize'):
+            if len(detectString) > 0 :
+                item.send_keys(detectString[0])
+                detectString.pop(0)
+    if ( act == 'js'):
+        driver.execute_script(source[1])
         
 def doSrcipt(driver,action):
     for item in action:
         doAction(item)
-
+    print( "Script Done!" )
 
 def get_captcha(driver, element, path):
     global reader
     global detectString
     global outputString
+    global ocrMode
     driver.save_screenshot(path)          # 先將目前的 screen 存起來
     location = element.location           # 取得圖片 element 的位置
     size = element.size                   # 取得圖片 element 的大小
@@ -86,13 +97,18 @@ def get_captcha(driver, element, path):
     image = Image.open(path)        # 將 screen load 至 memory
     image = image.crop((left, top, right, bottom)) # 根據位置剪裁圖片
     image.save(path, 'png')
-    detectString = reader.readtext(path, detail = 0)
+    if ocrMode == 0:
+        print('pytesseract')
+        detectString = pytesseract.image_to_string(image)
+    else:
+        print('easy ocr')
+        detectString = reader.readtext(path, detail = 0)
     for item in detectString:
         outputString += 'Detect Text:' + item + "\n"
             
     
 # main 
-f = open(path, 'r')
+f = open(path, 'r',encoding="utf-8")
 scriptStr = f.read()
 f.close()
 setting = find_between(scriptStr,"//Setting","//Setting").split("\n")[1:-1]
@@ -102,26 +118,31 @@ for item in setting:
     val = item.split(',')[1]
     settingDict[key] = val
 
-
-url = settingDict['url']#"https://officemail.cloudmax.com.tw"
-img_path = settingDict['img_path']#"/Users/paking-guest/Desktop/ipynb/screen.png"
-driverPath = settingDict['driverPath']#"/Users/paking-guest/Desktop/ipynb/chromedriver"
+ocrMode = settingDict['ocrMode'] # 0->pytesseract 1->easyocr
+url = settingDict['url']
+img_path = settingDict['img_path']
+driverPath = settingDict['driverPath']
 offsetX = int(settingDict['offsetX'])
 offsetY = int(settingDict['offsetY'])
 marginRight = int(settingDict['marginRight'])
 marginBottom = int(settingDict['marginBottom'])
 outputString = ""
+print('===Setting===')
 pprint(settingDict)
+print('===Setting===\n\n')
 driver = webdriver.Chrome(executable_path = driverPath)
 driver.set_window_size(int(settingDict['browserW']), int(settingDict['browserH']))
 detectString = ""
 reader = easyocr.Reader(['ch_sim','en'])
 action = find_between(scriptStr,"//Script","//Script").split("\n")[1:-1]
+print('===Script===')
+pprint(action)
+print('===Script===\n\n')
 driver.get(url)
+sleep(10)
 doSrcipt(driver,action)
-
 path = settingDict['outputText']
-f = open(path, 'w')
+f = open(path, 'w',encoding="utf-8")
 f.write(outputString)
 f.close()
 
@@ -130,5 +151,3 @@ while True:
     if keyboard.read_key() == "esc":
         driver.close()
         break
-
-    

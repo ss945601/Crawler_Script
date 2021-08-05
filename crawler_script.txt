@@ -1,5 +1,8 @@
+
+
+#將設定寫入Setting內
 //Setting
-url,https://officemail.cloudmax.com.tw
+url,https://www.cnblogs.com/PSSSCode/p/5465684.html
 img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/screen.png
 outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
 driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
@@ -9,18 +12,16 @@ marginRight,120
 marginBottom,70
 browserW,1440
 browserH,900
+ocrMode,1
 //Setting
 
-
+#將腳本動作寫入Script內
 //Script
-input,NAME,USERID,test@123.com
-input,NAME,PASSWD,123456
-recognize,ID,CaptQuiz
-input_recognize,NAME,CaptAns
-text,TAG_NAME,div
+text,TAG_NAME,td
 //Script
 
 /////////////////HOW TO USE///////////////////
+
 #offset, marginRight 抓取影像校正
 
 // 1.Action
@@ -28,13 +29,29 @@ input #輸入文字
 click #點擊
 text #取得文字
 recognize #辨識圖片文字
+js # do js script
+
 
 // 2.Html Tag or attri
-ID = "id" # filter by ID
-NAME = "name" # filter by NAME
-TAG_NAME = "tag name" # filter by tag name
-CLASS_NAME = "class name" # filter by class name
-CSS_SELECTOR = "css selector"  # filter by css
+1.ID = "id" # filter by ID
+2.NAME = "name" # filter by NAME
+3.TAG_NAME = "tag name" # filter by tag name
+4.CLASS_NAME = "class name" # filter by class name 有空白無法使用 請用css or xpath
+5.CSS_SELECTOR = "css selector"  # filter by css
+    # <div id="food">
+    #   <span class="dairy">milk</span>
+    #   <span class="dairy aged">cheese</span>
+    # </div>  
+    element = driver.find_element(:css, '#food span.dairy')
+6.XPATH = "xpath"
+    # <ul class="dropdown-menu">
+    #   <li><a href="/login/form">Login</a></li>
+    #   <li><a href="/logout">Logout</a></li>
+    # </ul>
+    element = driver.find_element(:xpath, '//a[@href='/logout']')
+7.LINK_TEXT = "link text"
+8.PARTIAL_LINK_TEXT = "partial link text"
+
 
 // 3. tag or attr val
 # tag or attr 是什麼
