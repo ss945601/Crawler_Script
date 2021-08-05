@@ -1,6 +1,17 @@
 
 
-#將設定寫入Setting內
+
+#--------
+#將設定寫入下方Setting內 格式：key,val
+url (目標網址)
+img_path (辨識圖片內文字,影像存取位置)
+outputText (抓取文字輸出紀錄）
+driverPath (Chrome driver位置, 要用其他browser自行修改)
+offsetX,offsetY (頻幕抓取圖片座標調整)
+marginRight,marginBottom （頻幕抓取圖片向右或向下拓寬）
+browserW,browserH（瀏覽器window size）
+ocrMode(文字辨識技術 0:pytesseract 1:easyocr(推薦))
+#--------
 //Setting
 url,https://www.cnblogs.com/PSSSCode/p/5465684.html
 img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/screen.png
@@ -15,7 +26,11 @@ browserH,900
 ocrMode,1
 //Setting
 
-#將腳本動作寫入Script內
+
+#--------
+#將腳本動作寫入Script內 格式：action,Tag / Attr,Value of Tag / Attr,....
+ex : text,TAG_NAME,td // 爬所有<td>內的文字
+#--------
 //Script
 text,TAG_NAME,td
 //Script
