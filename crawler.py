@@ -44,6 +44,7 @@ def doAction(item):
     source = item.split("|")
     act = source[0]
     if act == 'export':
+        sleep(3)
         f = open(folderPath + '/Crawler_Script/' + source[1], "a")
         f.write(driver.page_source)
         f.close()
