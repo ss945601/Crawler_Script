@@ -4,5 +4,6 @@
 # How to use
 1. 修改crawler.py path for crawler_script.txt
 2. 修改crawler_script.txt 如何修改參照裡面內容
-3. 下載Chrome driver
+3. 下載Chrome driver https://chromedriver.chromium.org/downloads
+
 
