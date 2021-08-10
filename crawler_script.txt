@@ -13,27 +13,27 @@ browserW,browserH（瀏覽器window size）
 ocrMode(文字辨識技術 0:pytesseract 1:easyocr(推薦))
 #--------
 //Setting
-url,http://000001rd.pakingtek.com/Local/map/3F.svg
+url,https://rdss.nca.gov.tw/MND_NCA/
 img_path,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/
 outputText,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/outputText.txt
 driverPath,/Users/paking-guest/Desktop/pythonTool/Crawler_Script/chromedriver
-offsetX,925
-offsetY,480
-scale_x,2
-scale_y,2
-browserW,1440
-browserH,900
+offsetX,0
+offsetY,0
+scale_x,1
+scale_y,1
+browserW,1920
+browserH,1080
 ocrMode,1
 //Setting
 
 
-#--------
+#--------s
 #將腳本動作寫入Script內 格式：action|Tag / Attr|Value of Tag / Attr|....
 ex : text|TAG_NAME|td // 爬所有<td>內的文字
 #--------
 //Script
-set_attr_val|XPATH|//*[contains(@id, 'p_0')]|stroke-width|10
-export|output.svg
+recognize|ID|code
+input_recognize|NAME|ckCode
 //Script
 
 /////////////////HOW TO USE///////////////////
@@ -47,6 +47,7 @@ text #取得文字
 get_attr_val #取得attribute value （ EX: get_attr_val,ID,p_0264_03,stroke-width,x,y 取得ID p_0264_03 的stroke-width,x,y 屬性值 ）
 set_attr_val #設定attribute value （ EX: set_attr_val,ID,p_0264_03,stroke-width,10 將ID p_0264_03 的 stroke-width 屬性 設成 10 ）
 recognize #辨識圖片文字
+input_recognize #輸入辨識完圖片文字
 js # do js script
 export # 輸出網頁內容 (EX : export|output.html)
 
@@ -66,7 +67,7 @@ export # 輸出網頁內容 (EX : export|output.html)
     #   <li><a href="/login/form">Login</a></li>
     #   <li><a href="/logout">Logout</a></li>
     # </ul> 
-    element = driver.find_element(:xpath, '//a[@href='/logout']') //*[contains(@name,'btn')]
+    element = driver.find_element(:xpath, '//a[@href='/logout']') '//*[contains(@href,'log')]''
 7.LINK_TEXT = "link text"
 8.PARTIAL_LINK_TEXT = "partial link text"
 

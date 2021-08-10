@@ -1,0 +1,3 @@
+recognize|ID|code
+Detect Text:NTsH
+input_recognize|NAME|ckCode

@@ -3,7 +3,7 @@ from time import sleep, time
 from bs4 import BeautifulSoup as soup
 import pandas as pd
 import json
-from PIL import Image
+from PIL import Image,ImageDraw
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -77,10 +77,10 @@ def doAction(item):
             outputString += "<get>" + item.text + "<get>\n"
         if ( act == 'recognize' ):
             get_captcha(driver,item,img_path+"recognize.png")
-            if ( act == 'input_recognize'):
-                if len(detectString) > 0 :
-                    item.send_keys(detectString[0])
-                    detectString.pop(0)
+        if ( act == 'input_recognize'):
+            if len(detectString) > 0 :
+                item.send_keys(detectString[0])
+                detectString.pop(0)
         if (act == 'get_image'):
             getImage(item,img_path+source[2]+'.png')
         if (act == 'get_attr_val'):
@@ -100,16 +100,18 @@ def doSrcipt(driver,action):
 
 def getImage(element,path):
     global driver
-    driver.save_screenshot(path)          # 先將目前的 screen 存起來
+    fullScreenPath = img_path+"screen.png"
+    driver.save_screenshot(fullScreenPath)          # 先將目前的 screen 存起來
     location = element.location           # 取得圖片 element 的位置
     size = element.size                   # 取得圖片 element 的大小
+    print(location)
     print(size)
     left = int(location['x']) + offsetX                 # 決定上下左右邊界
     top = int(location['y']) + offsetY
-    right = left + int(size['width']) * scale_x
-    bottom = top + int(size['height']) * scale_y
-    image = Image.open(path)        # 將 screen load 至 memory
-    image = image.crop((left, top, right, bottom)) # 根據位置剪裁圖片
+    width = int(size['width']) * scale_x
+    height = int(size['height']) * scale_y
+    image = Image.open(fullScreenPath)        # 將 screen load 至 memory
+    image = image.crop((left, top, left+width, top+height)) # 根據位置剪裁圖片
     image.save(path, 'png')
     return image
 
